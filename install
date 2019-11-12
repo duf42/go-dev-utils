@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "## Create symbolic links to /usr/local/bin"
+ln -s $PWD/go-start /usr/local/bin/go-start
+ln -s $PWD/go-stop /usr/local/bin/go-stop
+ln -s $PWD/go-exec /usr/local/bin/go-exec
+ln -s $PWD/go-test /usr/local/bin/go-test
+echo "## Done"
