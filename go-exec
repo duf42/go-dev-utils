@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+  echo ""
+  echo "syntax: exec <project_name>"
+  echo ""
+  echo "Replace <project_name>"
+  echo ""
+  echo "Project MUST define a main package/folder"
+  echo ""
+  exit 1
+fi
+
+PROJECT=$1
+
+docker exec go-dev-$PROJECT go install main
+docker exec go-dev-$PROJECT bin/main
+

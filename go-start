@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+  echo ""
+  echo "syntax: start <project_name>"
+  echo ""
+  echo "Replace <project_name> by the name of a subdirectory of $PWD"
+  echo ""
+  exit 1
+fi
+
+PROJECT=$1
+
+docker run --rm -it -d --name go-dev-$PROJECT -v $PWD/$PROJECT:/go/src golang
+
+
