@@ -11,6 +11,6 @@ fi
 
 PROJECT=$1
 
-docker run --rm -it -d --name go-dev-$PROJECT -v $PWD/$PROJECT:/go/src golang
+docker run --rm -it -d --name go-dev-$PROJECT -v $PWD/$PROJECT:/go/src -e GO111MODULE=on golang
 
 
