@@ -20,5 +20,12 @@ else
 fi
 
 echo "$PROJECT"
-docker run --rm -it -d --name go-dev-$PROJECT -v $FOLDER:/home -w /home -e GO111MODULE=on golang
+docker run --rm -it -d \
+  --name go-dev-$PROJECT \
+  -u $(id -u ${USER}):$(id -g ${USER}) \
+  -v $FOLDER:/home \
+  -w /home \
+  -e GO111MODULE=on \
+  -e GOCACHE=/tmp \
+  golang
 
