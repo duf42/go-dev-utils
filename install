@@ -1,8 +1,14 @@
 #!/bin/bash
 
 echo "## Create symbolic links to /usr/local/bin"
-ln -s $PWD/go-start /usr/local/bin/go-start
-ln -s $PWD/go-stop /usr/local/bin/go-stop
-ln -s $PWD/go-exec /usr/local/bin/go-exec
-ln -s $PWD/go-test /usr/local/bin/go-test
+echo "##     - go-start"
+ln -sfn $PWD/go-start /usr/local/bin/go-start
+echo "##     - go-stop"
+ln -sfn $PWD/go-stop /usr/local/bin/go-stop
+echo "##     - go-exec"
+ln -sfn $PWD/go-exec /usr/local/bin/go-exec
+echo "##     - go-test"
+ln -sfn $PWD/go-test /usr/local/bin/go-test
+echo "##     - go-run"
+ln -sfn $PWD/go-run /usr/local/bin/go-run
 echo "## Done"

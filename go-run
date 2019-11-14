@@ -1,14 +1,16 @@
 #!/bin/bash
 
-if [ "$#" -eq 1 ]; then
+if [ "$#" -eq 2 ]; then
   CONTAINER=go-dev-$1
-else
+  APP=$2
+elif [ "$#" -eq 1 ];then
   CONTAINER=$(docker ps -aqf "name=go-dev-*")
+  APP=$1
 fi
 
 if [ -z "$CONTAINER" ];then
   echo "No running container"
 else
-  docker exec $CONTAINER go test ./...
+  docker exec $CONTAINER go run $APP
 fi
 

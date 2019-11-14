@@ -1,15 +1,14 @@
 #!/bin/bash
 
-if [ "$#" -ne 1 ]; then
-  echo ""
-  echo "syntax: stop <project_name>"
-  echo ""
-  echo "Replace <project_name>"
-  echo ""
-  exit 1
+if [ "$#" -eq 1 ]; then
+  CONTAINER=go-dev-$1
+else
+  CONTAINER=$(docker ps -aqf "name=go-dev-*")
 fi
 
-PROJECT=$1
-
-docker stop go-dev-$PROJECT
+if [ -z "$CONTAINER" ];then
+  echo "No running container"
+else
+  docker stop $CONTAINER
+fi
 
