@@ -19,7 +19,12 @@ else
   FOLDER=$PWD/$1
 fi
 
-echo "$PROJECT"
+if [ ! -d "$FOLDER" ];then
+  echo "Folder $FOLDER does not exist"
+  exit 1
+fi
+
+echo "$PROJECT ($FOLDER)"
 docker run --rm -it -d \
   --name go-dev-$PROJECT \
   -u $(id -u ${USER}):$(id -g ${USER}) \
