@@ -1,36 +1,56 @@
 #!/bin/bash
 
-if [ "$#" -ne 1 ]; then
+help() {
   echo ""
   echo "syntax: start [PROJECT]"
   echo ""
   echo "PROJECT is the relative path to project from current folder (actually: $PWD)"
   echo "Project can also be '.' for current folder"
   echo ""
-  exit 1
-fi
+}
 
+PROJECT=$(basename $PWD)
+FOLDER=$PWD
 
-if [ "$1" == "." ];then
-  PROJECT=$(basename $PWD)
-  FOLDER=$PWD
-else
-  PROJECT=$(basename $1)
-  FOLDER=$PWD/$1
-fi
+OPTS=""
+
+#
+# Parse arguments
+#
+while getopts ":p:d:" opt $@; do
+  case ${opt} in
+    p )
+      OPTS="$OPTS -p $OPTARG:80"
+      ;;
+    d )
+      directory=$OPTARG
+      PROJECT=$(basename $directory)
+      FOLDER=$PWD/$directory
+      ;;
+    \? )
+      echo "/!\ Invalid option: $OPTARG" 1>&2
+      help
+      exit 1
+      ;;
+    : )
+      echo "/!\ Invalid option: $OPTARG requires an argument" 1>&2
+      help
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND -1))
+
 
 if [ ! -d "$FOLDER" ];then
-  echo "Folder $FOLDER does not exist"
+  echo "/!\ Folder $FOLDER does not exist"
   exit 1
 fi
 
-echo "$PROJECT ($FOLDER)"
-docker run --rm -it -d \
-  --name go-dev-$PROJECT \
-  -u $(id -u ${USER}):$(id -g ${USER}) \
-  -v $FOLDER:/home \
-  -w /home \
-  -e GO111MODULE=on \
-  -e GOCACHE=/tmp \
-  golang
+CMD="docker run --rm -it -d --name go-dev-$PROJECT $OPTS -u $(id -u ${USER}):$(id -g ${USER}) -v $FOLDER:/home -w /home -e GO111MODULE=on -e GOCACHE=/tmp golang"
 
+echo $CMD
+$CMD
+echo ""
+echo "$PROJECT ($FOLDER)"
+echo ""
