@@ -20,7 +20,7 @@ OPTS=""
 while getopts ":p:d:" opt $@; do
   case ${opt} in
     p )
-      OPTS="$OPTS -p $OPTARG:80"
+      OPTS="$OPTS -p $OPTARG:8080"
       ;;
     d )
       directory=$OPTARG
